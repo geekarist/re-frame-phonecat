@@ -17,7 +17,8 @@
                  [metosin/reitit "0.3.10"]
                  [pez/clerk "1.0.0"]
                  [venantius/accountant "0.2.5"
-                  :exclusions [org.clojure/tools.reader]]]
+                  :exclusions [org.clojure/tools.reader]]
+                 [re-frame "0.11.0"]]
 
   :plugins [[lein-environ "1.1.0"]
             [lein-cljsbuild "1.1.7"]
