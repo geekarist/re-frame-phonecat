@@ -24,7 +24,7 @@
 
 (path-for :about)
 
-;; Handlers
+; region Handlers
 
 (re-frame/reg-event-db
   :initialise-db
@@ -33,17 +33,37 @@
               {:name "Motorola XOOM™ with Wi-Fi" :snippet "The Next, Next Generation tablet."}
               {:name "Motoral Xoom" :snippet "The Next, Next Generation tablet."}]}))
 
+; endregion
+
+; region Subscriptions
+
+(re-frame/reg-sub-raw :phones
+                       (fn [db]
+                         (reagent.ratom/reaction (:phones db))))
+
+; endregion
+
+; region My components
+
+(defn phone-component
+  [phone]
+  [:li
+   [:span (:name @phone)]
+   [:p (:snippet @phone)]])
+
+(defn phone-list-component
+  []
+  (let [phones (re-frame/subscribe [:phones])]
+    (fn []
+      [:ul (for [phone @phones]
+             ^{:key phone} [phone-component phone])])))
+
+; endregion
+
 ;; Page components
 
 (defn home-page []
-  (fn []
-    [:ul
-     [:li
-      [:span "Nexus S"]
-      [:p "Fast just got faster with Nexus S."]]
-     [:li
-      [:span "Motorola XOOM with Wi-Fi"]
-      [:p "The Next, Next Generation tablet."]]]))
+  [phone-list-component])
 
 (defn items-page []
   (fn []
