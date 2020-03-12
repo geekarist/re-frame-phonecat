@@ -26,7 +26,7 @@
 
 ;; Handlers
 
-(re-frame/register-handler
+(re-frame/reg-event-db
   :initialise-db
   (fn [_ _]
     {:phones [{:name "Nexus S" :snippet "Fast just got faster with Nexus S."}
@@ -92,6 +92,7 @@
 ;; Initialize app
 
 (defn mount-root []
+  (re-frame/dispatch [:initialise-db])
   (reagent/render [current-page] (.getElementById js/document "app")))
 
 (defn init! []
